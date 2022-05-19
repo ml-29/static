@@ -101,7 +101,7 @@ function route($url){
 	$image = null;
 
 	//if request for an image
-	if($parsed_url['path'][0] == 'img'){
+	if(sizeof($parsed_url['path']) == 1 && $parsed_url['path'][0] == 'img'){
 		$dest_file = './' . implode('/', $parsed_url['path']);
 
 		//if the file asked for in the URL isn't present, try to generate it

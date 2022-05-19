@@ -1,1 +1,11 @@
 /* your website CSS goes here */
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+header, footer {
+	background-color: DarkGrey;
+	color: White;
+}
