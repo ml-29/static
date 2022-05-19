@@ -57,6 +57,7 @@
 		<h2>Test IMG !!!!!!!!!!!!!!!!!!</h2>
 		<img src="img/100/100/sample.jpg">
 		<img src="img/sample.jpg">
+		
 		<?php include($template); ?>
 
 		<footer>
