@@ -240,4 +240,4 @@ function route($url){
 // route('https://localhost:80/img/boop.boop');
 // route('https://localhost:80/img/boop.webp');
 // route('https://localhost:80/img/favicon.ico');
-// route($_SERVER['REQUEST_URI']);
+route($_SERVER['REQUEST_URI']);
