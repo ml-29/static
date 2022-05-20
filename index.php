@@ -91,13 +91,19 @@ function error($code){
 }
 
 function route($url){
+	global $config;
 	global $folder;
 	global $template;
 	global $data;
+	global $menu;
+	global $footer_menu;
 	global $thread;
 	global $parsed_url;
 
 	$parsed_url = parseURL($url);
+	if($parsed_url['path'][0] == 'static'){
+		array_shift($parsed_url['path']);
+	}
 	$image = null;
 
 	//if request for an image
@@ -117,7 +123,7 @@ function route($url){
 			$extensions = ['jpg', 'png', 'webp', 'gif', 'ico'];
 			$src_file = './img/' . $full_name;
 			//if a corresponding source file doesn't exist at the root of the img directory, try and find an image with same name but different extension to convert from
-			//svg files are never converted as they are already the best option, that is lighter thus better suited for fast loading than other formats
+			//svg files are never converted as they are already the most efficient option resizing and loading-wise
 			if(!file_exists($src_file) && in_array($extension, $extensions)){
 				foreach ($extensions as $e) {
 					$src_file = './img/' . $name . '.' . $e;
@@ -150,20 +156,20 @@ function route($url){
 				}
 			}
 
-			//resize if needed (needed if size parameters are present and file is not an svg)
-			if(sizeof($parsed_url['path']) == 4 && $extension != 'svg'){
-				//create the necessary folder structure
-				$folder_structure = substr($dest_file, 0, strrpos($dest_file, '/') + 1);
-				if(!file_exists($folder_structure)){
-					mkdir($folder_structure, 0777, true);
+			if($image){//if a file has been generated at all, resize if necessary and save it
+				//resize if needed (needed if size parameters are present and file is not an svg)
+				if(sizeof($parsed_url['path']) == 4 && $extension != 'svg'){
+					//create the necessary folder structure
+					$folder_structure = substr($dest_file, 0, strrpos($dest_file, '/') + 1);
+					if(!file_exists($folder_structure)){
+						mkdir($folder_structure, 0777, true);
+					}
+
+					$width = $parsed_url['path'][1];
+					$height = $parsed_url['path'][2];
+
+					$image = imagescale($image , $width , $height);
 				}
-
-				$width = $parsed_url['path'][1];
-				$height = $parsed_url['path'][2];
-
-				$image = imagescale($image , $width , $height);
-			}
-			if($image){//if a file has been generated at all, save it
 				switch($extension){
 					case 'jpg':
 						imagejpeg($image, $dest_file);
@@ -219,7 +225,12 @@ function route($url){
 			$template = $folder . 'main.php';
 			$data = getData($folder);
 		}
-		include('base.php');
+		if($template){
+			include('base.php');
+		}else{
+			error(404);
+		}
+
 	}
 }
 
@@ -240,4 +251,5 @@ function route($url){
 // route('https://localhost:80/img/boop.boop');
 // route('https://localhost:80/img/boop.webp');
 // route('https://localhost:80/img/favicon.ico');
+// route('https://localhost:80/img/150/100/logo.jpg');
 route($_SERVER['REQUEST_URI']);

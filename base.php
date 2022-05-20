@@ -18,17 +18,17 @@
 		<link rel="stylesheet" href="style.css">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css" rel="stylesheet" />
 
-
 		<?php if(!empty($data['imports'])): ?>
 			<?php include($data['imports']); ?>
 		<?php endif; ?>
 	</head>
 	<body>
 		<header>
-			<?php if(!empty($config['website_name'])): ?>
-				<a href="/"><img src="logo.jpg" title="<?php echo $config['website_name']; ?>"></a>
-				<p><?php echo $config['website_name']; ?></p>
+			<?php if(!empty($config['website-name'])): ?>
+				<a href="/"><img src="img/150/100/logo.jpg" title="<?php echo $config['website-name']; ?>"></a>
+				<p><?php echo $config['website-name']; ?></p>
 			<?php endif; ?>
+
 			<nav>
 				<?php if(!empty($menu)): ?>
 					<ul>
@@ -53,11 +53,11 @@
 			    </ul>
 			</nav>
 		<?php endif;?>
-
+<!--
 		<h2>Test IMG !!!!!!!!!!!!!!!!!!</h2>
 		<img src="img/100/100/sample.jpg">
-		<img src="img/sample.jpg">
-		
+		<img src="img/sample.jpg"> -->
+
 		<?php include($template); ?>
 
 		<footer>
