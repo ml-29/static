@@ -1,6 +1,15 @@
-<h1><?php echo $data['meta']['h1']; ?></h1>
+<?php if($data['meta']['thumbnail']):?>
+	<img src="/img/2000/200/<?php echo $data['meta']['thumbnail']; ?>">
+<?php endif;?>
 
-<?php echo $data['content']; ?>
+<!-- TODO : add dates (updated, edited + tags) -->
+<div class="h1-overlay">
+	<h1><?php echo $data['meta']['h1']; ?></h1>
+</div>
+
+<div class="container">
+	<?php echo $data['content']; ?>
+</div>
 
  <?php ob_start(); ?>
  	<!-- blog list imports -->

@@ -18,3 +18,8 @@ FallbackResource /index.php
    RewriteRule ^(.*)$ index.php [L,QSA]
 
 </IfModule>
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /static/index.php?path=$1 [NC,L,QSA]

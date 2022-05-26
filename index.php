@@ -9,7 +9,7 @@ $parsed_url = [];
 
 $menu = [
 	'Home' => '/',
-	'Blog' => '/blog'
+	'Blog' => '/blog/'
 ];
 
 $thread = [];
@@ -29,6 +29,15 @@ function parseURL($url){
 	return $r;
 }
 
+function getExcerpt($text, $limit=55) {
+    if (str_word_count($text, 0) > $limit) {
+        $words = str_word_count($text, 2);
+        $pos   = array_keys($words);
+        $text  = substr($text, 0, $pos[$limit]) . '...';
+    }
+    return $text;
+}
+
 function listPosts($type){
 	global $config;
 	$s = scandir($type . 's');
@@ -41,6 +50,17 @@ function listPosts($type){
 	}
 	return $r;
 }
+function listPostTypes(){
+	// global $config;
+	$s = scandir(getcwd());
+	$r = [];
+	foreach($s as $v){
+		if(is_dir($v) && isSlug($v) && $v != 'img') {
+			array_push($r, $v);
+		}
+	}
+	return $r;
+}
 
 function isSlug($s){
 	return preg_match('/^[a-z0-9]+(-?[a-z0-9]+)*$/i', $s);
@@ -48,8 +68,25 @@ function isSlug($s){
 
 function getData($folder){
 	global $Parsedown;
+	$data = [];
+
+	$data['content'] = '';
+	$data['excerpt'] = '';
+	$data['meta'] = [];
+
+	if(!array_key_exists('imports', $data)){
+		$data['imports'] = '';
+	}
+	if(!array_key_exists('css', $data)){
+		$data['css'] = '';
+	}
+	if(!array_key_exists('js', $data)){
+		$data['js'] = '';
+	}
+
 	if(file_exists($folder . 'content.md')){
 		$data['content'] = $Parsedown->text(file_get_contents($folder . 'content.md'));
+		$data['excerpt'] = getExcerpt($data['content']);
 	}
 	if(file_exists($folder . 'meta.yml')){
 		$data['meta'] = yaml_parse_file($folder . 'meta.yml');
@@ -101,13 +138,13 @@ function route($url){
 	global $parsed_url;
 
 	$parsed_url = parseURL($url);
-	if($parsed_url['path'][0] == 'static'){
+	if(sizeof($parsed_url['path']) >= 1 && $parsed_url['path'][0] == 'static'){
 		array_shift($parsed_url['path']);
 	}
-	$image = null;
 
 	//if request for an image
 	if(sizeof($parsed_url['path']) >= 1 && $parsed_url['path'][0] == 'img'){
+		$image = null;
 		$dest_file = './' . implode('/', $parsed_url['path']);
 
 		//if the file asked for in the URL isn't present, try to generate it
@@ -168,7 +205,7 @@ function route($url){
 					$width = $parsed_url['path'][1];
 					$height = $parsed_url['path'][2];
 
-					$image = imagescale($image , $width , $height);
+					$image = imagescale($image , $width , $height, IMG_NEAREST_NEIGHBOUR);
 				}
 				switch($extension){
 					case 'jpg':
@@ -195,7 +232,7 @@ function route($url){
 	}else{
 		if(sizeof($parsed_url['path']) == 2 && $parsed_url['path'][0] == 'blog' && isSlug($parsed_url['path'][1])){//single blog /blog/ + slug
 			$folder = 'blogs/' . $parsed_url['path'][1] . '/';
-			$template = 'blogs/__single/single.php';
+			$template = 'blogs/single.php';
 			$data = getData($folder);
 			$thread = [
 				$config['website-name'] => '/',
@@ -214,7 +251,10 @@ function route($url){
 			];
 		}else if(sizeof($parsed_url['path']) == 1 && isSlug($parsed_url['path'][0])){//page / + slug
 			$folder = 'pages/' . $parsed_url['path'][0] . '/';
-			$template = $folder . '/__single/single.php';
+			$template = $folder . 'template.php';
+			if(!file_exists($template)){
+				$template = 'pages/single.php';
+			}
 			$data = getData($folder);
 			$thread = [
 				$config['website-name'] => '/',
@@ -222,7 +262,7 @@ function route($url){
 			];
 		}else if(sizeof($parsed_url['path']) == 0){//home : /
 			$folder = 'pages/home_page/';
-			$template = $folder . 'main.php';
+			$template = $folder . 'template.php';
 			$data = getData($folder);
 		}
 		if($template){
@@ -230,26 +270,7 @@ function route($url){
 		}else{
 			error(404);
 		}
-
 	}
 }
 
-// route('https://localhost:80/img/200/200/vector.svg');
-// route('https://localhost:80/img/vector.svg');
-//
-// route('https://localhost:80/img/200/200/sample.png');
-// route('https://localhost:80/img/200/200/sample.jpg');
-// route('https://localhost:80/img/200/200/sample.gif');
-// route('https://localhost:80/img/200/200/sample.webp');
-//
-//
-// route('https://localhost:80/img/sample.PNG');
-// route('https://localhost:80/img/100/100/sample.jpg');
-// route('https://localhost:80/img/sample.gif');
-
-// route('https://localhost:80/img/sample.boop');
-// route('https://localhost:80/img/boop.boop');
-// route('https://localhost:80/img/boop.webp');
-// route('https://localhost:80/img/favicon.ico');
-// route('https://localhost:80/img/150/100/logo.jpg');
 route($_SERVER['REQUEST_URI']);

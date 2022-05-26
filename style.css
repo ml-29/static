@@ -1,11 +1,63 @@
 /* your website CSS goes here */
-
+body {
+	margin : 0;
+}
 a {
 	text-decoration: none;
 	color: inherit;
+	font-weight: bold;
 }
-
 header, footer {
 	background-color: DarkGrey;
 	color: White;
+}
+header nav ul li {
+	padding: 15px;
+}
+nav ul {
+	list-style: none;
+	padding: 0;
+}
+.breadcrumb {
+	background-color : LightGrey;
+}
+.breadcrumb ul li {
+	display: inline-block;
+}
+.container {
+	max-width: 800px;
+	margin: auto;
+}
+p a, .container strong {
+	color: DarkGrey;
+}
+.line>*{
+	display: inline-block;
+}
+.button {
+	background-color: DarkGrey;
+	color: White;
+	cursor: pointer;
+	padding: 15px;
+	display: block;
+	max-width: 120px;
+}
+h1 {
+	color: DarkGrey;
+	text-align: center;
+}
+.thumbnail {
+	width: 100%;
+}
+.accent {
+	background-color: DarkBlue;
+	color: White;
+	text-align: center;
+}
+.accent h1 {
+	color : White;
+}
+header, .line, header nav ul {
+	display: flex;
+	flex-direction: row;
 }
