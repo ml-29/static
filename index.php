@@ -127,6 +127,26 @@ function error($code){
 	die();
 }
 
+function getTemplate($theme, $post_type, $list_or_single){
+	$template = '';
+	global $data;
+	global $folder;
+	if(array_key_exists('meta', $data) && array_key_exists('template', $data['meta'])){
+		$meta_template = $data['meta']['template'];
+	}else{
+		$meta_template = false;
+	}
+
+	if(file_exists($template = $folder . 'template.php')){
+		return $template;
+	}else if($meta_template && file_exists($template = $folder . $meta_template)){
+		return $template;
+	}else if(file_exists($template = $folder . $list_or_single . '.php')){
+		return $template;
+	}
+	return 'themes/' . $theme . '/' . $post_type . '-' . $list_or_single . '.php';
+}
+
 function route($url){
 	global $config;
 	global $folder;
@@ -234,6 +254,8 @@ function route($url){
 			$folder = 'blogs/' . $parsed_url['path'][1] . '/';
 			$template = 'blogs/single.php';
 			$data = getData($folder);
+			// $template = getTemplate($config['theme'], 'blog', 'single', $folder, $meta['template']);
+			// $template = getTemplate($config['theme'], 'blog', 'single');
 			$thread = [
 				$config['website-name'] => '/',
 				'blog' => '/blog',
@@ -242,8 +264,10 @@ function route($url){
 			//TODO:get tags from meta.yml + display the on the template
 		}elseif(sizeof($parsed_url['path']) == 1 && $parsed_url['path'][0] == 'blog'){//blog list /blog
 			$folder = 'blogs/__list/';
-			$template = $folder . 'list.php';
+			$template = $folder . 'template.php';
 			$data = getData($folder);
+			// $template = getTemplate($config['theme'], 'blog', 'list', $folder, $meta['template']);
+			// $template = getTemplate($config['theme'], 'blog', 'list');
 			$list = listPosts('blog');
 			$thread = [
 				$config['website-name'] => '/',
@@ -256,14 +280,17 @@ function route($url){
 				$template = 'pages/single.php';
 			}
 			$data = getData($folder);
+			// $template = getTemplate($config['theme'], 'page', 'single', $folder, $data['meta']['template']);
+			// $template = getTemplate($config['theme'], 'page', 'single');
 			$thread = [
 				$config['website-name'] => '/',
 				$data['meta']['h1'] => getPostURL('page', $parsed_url['path'][0])
 			];
 		}else if(sizeof($parsed_url['path']) == 0){//home : /
-			$folder = 'pages/home_page/';
+			$folder = 'pages/' . $config['home-page-folder'] .'/';
 			$template = $folder . 'template.php';
 			$data = getData($folder);
+			// $template = getTemplate($config['theme'], 'page', 'single');
 		}
 		if($template){
 			include('base.php');
@@ -274,3 +301,9 @@ function route($url){
 }
 
 route($_SERVER['REQUEST_URI']);
+
+//tests
+
+//blog
+
+//page
