@@ -57,6 +57,12 @@ h1 {
 .accent h1 {
 	color : White;
 }
+.tag {
+	background-color: DarkBlue;
+	border-radius: 2px;
+	padding: 2px;
+	color: White;
+}
 header, .line, header nav ul {
 	display: flex;
 	flex-direction: row;

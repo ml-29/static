@@ -2,11 +2,16 @@
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<!-- META DATA -->
-		<?php if(!empty($data['meta']['meta-description'])): ?>
-			<meta name="description" content="<?php echo $data['meta']['meta-description']; ?>">
+		<?php if(!empty($data['meta']['description'])): ?>
+			<meta name="description" content="<?php echo $data['meta']['description']; ?>">
 		<?php endif; ?>
+		<?php if(!empty($data['meta']['tags'])): ?>
+			<meta name="keywords" content="<?php echo implode(', ', $data['meta']['tags']); ?>">
+		<?php endif; ?>
+
 
 		<!-- FAVICON -->
 		<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
