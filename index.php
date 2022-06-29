@@ -228,13 +228,13 @@ function route($url){
 					$old_width = getimagesize($src_file)[0];
 					$old_height = getimagesize($src_file)[1];
 					//dst - src
-					if($width > $height){
-						$temp_height =  $old_height * $width / $old_width;
+					$temp_height =  $old_height * $width / $old_width;
+					$temp_width =  $old_width * $height / $old_height;
+					if($temp_height >= $height){
 						$image_p = imagecreatetruecolor($width, $temp_height);
 						imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $temp_height,  $old_width, $old_height);
 						$image_p = imagecrop($image_p, ['x' => 0, 'y' => ($temp_height - $height) /2, 'width' => $width, 'height' => $height]);
 					}else{
-						$temp_width =  $old_width * $height / $old_height;
 						$image_p = imagecreatetruecolor($temp_width, $height);
 						imagecopyresampled($image_p, $image, 0, 0, 0, 0, $temp_width, $height,  $old_width, $old_height);
 						$image_p = imagecrop($image_p, ['x' => ($temp_width - $width) /2, 'y' => 0, 'width' => $width, 'height' => $height]);
@@ -315,7 +315,8 @@ function route($url){
 }
 
 route($_SERVER['REQUEST_URI']);
-// route('/img/150/120/sample.jpg');
+// unlink('/img/150/100/logo.jpg');
+// route('/img/150/100/logo.jpg');
 // route('/search');
 
 //tests
