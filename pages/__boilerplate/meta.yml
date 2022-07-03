@@ -4,8 +4,3 @@ h1 : "The page main heading"
 published-at : ""
 created-at : ""
 thumbnail : "img/sample.jgp"
-tags :
-    - 'code'
-    - 'HTML'
-    - 'CSS'
-    - 'Node'
