@@ -59,7 +59,7 @@
 			<nav aria-label="Breadcrumb" class="breadcrumb">
 			    <ul>
 					<?php foreach($thread as $name => $link):
-						if($name != array_key_last($thread)):?>
+						if($name != array_key_last($thread) && !empty($link)):?>
 							<li><a href="<?php echo $link; ?>"><?php echo $name; ?></a> >></li>
 						<?php else :?>
 							<li><span aria-current="page"><?php echo $name; ?></span></li>

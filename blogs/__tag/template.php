@@ -1,8 +1,6 @@
 <img src="/img/2000/200/background.jpg">
 
-<h1><?php echo $data['meta']['h1']; ?></h1>
-
-
+<h1><?php echo ucfirst($data['tag']); ?></h1>
 
 <div class="container">
 	<?php echo $data['content']; ?>

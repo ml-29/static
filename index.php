@@ -65,6 +65,9 @@ function listPostTypes(){
 function isSlug($s){
 	return preg_match('/^[a-z0-9]+(-?[a-z0-9]+)*$/i', $s);
 }
+function slugify($s){
+	return str_replace(' ', '-', strtolower($s));
+}
 
 function getData($folder){
 	global $Parsedown;
@@ -280,15 +283,39 @@ function route($url){
 			$folder = 'blogs/__list/';
 			$template = $folder . 'template.php';
 			$data = getData($folder);
-			// $template = getTemplate($config['theme'], 'blog', 'list', $folder, $meta['template']);
-			// $template = getTemplate($config['theme'], 'blog', 'list');
 			$list = listPosts('blog');
 			$thread = [
 				$config['website-name'] => '/',
 				'blog' => '/blog'
 			];
+			// $template = getTemplate($config['theme'], 'blog', 'list', $folder, $meta['template']);
+			// $template = getTemplate($config['theme'], 'blog', 'list')
+
+		}elseif(sizeof($parsed_url['path']) == 2 && $parsed_url['path'][0] == 'tag' && isSlug($parsed_url['path'][1])){//tag page
+			$folder = 'blogs/__tag/';
+			$template = $folder . 'template.php';
+			$data = getData($folder);
+			$data['tag'] = strtolower(str_replace('-', ' ', $parsed_url['path'][1]));
+			$thread = [
+				$config['website-name'] => '/',
+				'tag' => '',
+				$data['tag'] => '/tag/' . $parsed_url['path'][1]
+			];
+			$l = listPosts('blog');
+			$list = [];
+			foreach ($l as $blog){
+				if(array_key_exists('meta', $blog) && array_key_exists('tags', $blog['meta'])){
+					$tags = $blog['meta']['tags'];
+					if(in_array($data['tag'], $tags)){
+						array_push($list, $blog);
+					}
+				}
+			}
 		}else if(sizeof($parsed_url['path']) == 1 && isSlug($parsed_url['path'][0])){//page / + slug
 			$folder = 'pages/' . $parsed_url['path'][0] . '/';
+			if(!file_exists($folder)){
+				error(404);
+			}
 			$template = $folder . 'template.php';
 			if(!file_exists($template)){
 				$template = 'pages/single.php';
@@ -296,10 +323,7 @@ function route($url){
 			$data = getData($folder);
 			// $template = getTemplate($config['theme'], 'page', 'single', $folder, $data['meta']['template']);
 			// $template = getTemplate($config['theme'], 'page', 'single');
-			$thread = [
-				$config['website-name'] => '/',
-				$data['meta']['h1'] => getPostURL('page', $parsed_url['path'][0])
-			];
+
 		}else if(sizeof($parsed_url['path']) == 0){//home : /
 			$folder = 'pages/' . $config['home-page-folder'] .'/';
 			$template = $folder . 'template.php';

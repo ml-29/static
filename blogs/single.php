@@ -17,7 +17,7 @@
 		<span style="display: block;"><b>Last modification : </b><?php echo date("F j, Y, g:i a", strtotime($data['meta']['updated_at'])); ?></span>
 	<?php endif; ?>
 	<?php foreach($data['meta']['tags'] as $t): ?>
-		<span class="tag"><?php echo $t; ?></span>
+		<span class="tag"><a href="/tag/<?php echo slugify($t); ?>"><?php echo $t; ?></a></span>
 	<?php endforeach; ?>
 
 	<?php echo $data['content']; ?>
