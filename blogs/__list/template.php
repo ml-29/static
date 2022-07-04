@@ -16,6 +16,11 @@
 				<div>
 					<h2><a href="<?php echo $l['href']; ?>"><?php echo $l['meta']['h1']; ?></a></h2>
 					<?php echo $l['excerpt']; ?>
+					<div style="margin-bottom: 10px;">
+						<?php foreach($l['meta']['tags'] as $t): ?>
+							<span class="tag"><a href="/tag/<?php echo slugify($t); ?>"><?php echo $t; ?></a></span>
+						<?php endforeach; ?>
+					</div>
 					<a class="button" href="<?php echo $l['href']; ?>">Learn more >>></a>
 				</div>
 			</div>

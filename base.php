@@ -12,7 +12,6 @@
 			<meta name="keywords" content="<?php echo implode(', ', $data['meta']['tags']); ?>">
 		<?php endif; ?>
 
-
 		<!-- FAVICON -->
 		<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
 
@@ -52,6 +51,14 @@
 					</ul>
 				<?php endif; ?>
 			</nav>
+
+			<!-- SEARCH INPUT -->
+			<div id="search">
+				<form action="/search" method="get">
+					<input name="q" type="text" placeholder="Tag, keywords ..."/>
+					<input type="submit" value="Search"/>
+				</form>
+			</div>
 		</header>
 
 		<!-- BREADCRUMB -->
