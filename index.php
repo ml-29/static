@@ -9,7 +9,8 @@ $parsed_url = [];
 
 $menu = [
 	'Home' => '/',
-	'Blog' => '/blog/'
+	'Blog' => '/blog/',
+	'Contact us' => '/contact-us/'
 ];
 
 $thread = [];
