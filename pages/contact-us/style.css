@@ -1,3 +1,7 @@
+body {
+	background-color: Blue;
+}
+
 .success {
 	border: 1px Solid DarkGreen;
 	background-color: LightGreen;

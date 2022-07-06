@@ -10,7 +10,7 @@ $parsed_url = [];
 $menu = [
 	'Home' => '/',
 	'Blog' => '/blog/',
-	'Contact us' => '/contact-us/'
+	'Contact us' => '/contact-us'
 ];
 
 $thread = [];
@@ -31,7 +31,7 @@ function parseURL($url){
 }
 
 function getExcerpt($text, $limit=55) {
-    if (str_word_count($text, 0) > $limit) {
+    if(str_word_count($text, 0) > $limit) {
         $words = str_word_count($text, 2);
         $pos   = array_keys($words);
         $text  = substr($text, 0, $pos[$limit]) . '...';
@@ -98,7 +98,7 @@ function getData($folder){
 	if(file_exists($folder . 'imports.html')){
 		$data['imports'] .= file_get_contents($folder . 'imports.html');
 	}
-	if(file_exists($folder . 'css.html')){
+	if(file_exists($folder . 'style.css')){
 		$data['css'] .= file_get_contents($folder . 'style.css');
 	}
 	if(file_exists($folder . 'scripts.js')){
@@ -312,7 +312,7 @@ function route($url){
 					}
 				}
 			}
-		}else if(sizeof($parsed_url['path']) == 1 && isSlug($parsed_url['path'][0])){//page / + slug
+		}else if(sizeof($parsed_url['path']) == 1 && isSlug($parsed_url['path'][0])){//page : / + slug
 			$folder = 'pages/' . $parsed_url['path'][0] . '/';
 			if(!file_exists($folder)){
 				error(404);
