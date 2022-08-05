@@ -1,3 +1,13 @@
-website-name : "Static website"
-home-page-folder : "__home_page"
-contact-e-mail-address : "contact@example.com"
+website-name: "Static website"
+contact-e-mail-address: "contact@example.com"
+admin-e-mail-adress: ""
+contact-phone-number: ""
+menu:
+    'Home' : '/'
+    'Blog' : '/blog/'
+    'Contact us' : '/contact-us'
+footer-menu:
+    'Home' : '/'
+    'About' : '/about'
+    'Site map' : '/sitemap'
+home-page-folder: "__home_page"

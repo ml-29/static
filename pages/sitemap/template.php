@@ -3,12 +3,12 @@
 </div>
 
 <div class="container">
-	<?php $types = listPostTypes();
+	<?php $types = DataAccess::listPostTypes();
 	foreach($types as $t): ?>
 		<h2><?php echo ucfirst($t); ?></h2>
 		<ul>
 			<?php $t = substr($t, 0, -1);
-			$posts = listPosts($t);
+			$posts = DataAccess::listPosts($t);
 			foreach($posts as $p): ?>
 				<li><a href="<?php echo $p['href']; ?>"><?php echo $p['meta']['h1']; ?></a></li>
 			<?php endforeach; ?>

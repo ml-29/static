@@ -2,13 +2,11 @@
 
 <h1><?php echo $data['meta']['h1']; ?></h1>
 
-
-
 <div class="container">
 	<?php echo $data['content']; ?>
 
-	<?php if(!empty($list)): ?>
-		<?php foreach($list as $l):?>
+	<?php if(!empty($data['list'])): ?>
+		<?php foreach($data['list'] as $l):?>
 			<div class="line">
 				<a href="<?php echo $l['href']; ?>">
 					<img src="/img/200/100/<?php echo $l['meta']['thumbnail']; ?>" alt="<?php echo $l['meta']['title']; ?>">

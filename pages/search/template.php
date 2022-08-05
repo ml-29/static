@@ -1,48 +1,54 @@
 <?php
-	$search = strtolower(trim($_GET['q']));
-	$search_terms = explode(' ', $search);
-	$blog_posts = listPosts('blog');
-
 	$results = [];
+	$search = "";
+	if(isset($_GET['q'])){
+		$search = strtolower(trim($_GET['q']));
+		$search_terms = explode(' ', $search);
+		$blog_posts = listPosts('blog');
 
-	foreach($blog_posts as $p){
-	   if(str_contains($p['meta']['h1'], $search)){//Full-sentence matches in post title
-		   //push
-		   array_push($results, $p);
-	   }else{
-		   $all_search_terms = true;
-		   foreach($search_terms as $t){//check that All search terms in post title
-			   if(!str_contains($p['meta']['h1'], $search)){
-				   $all_search_terms = false;
-				   break;
-			   }
-		   }
-		   if($all_search_terms){//if all search terms can be found in post title
+		foreach($blog_posts as $p){
+		   if(str_contains($p['meta']['h1'], $search)){//Full-sentence matches in post title
 			   //push
 			   array_push($results, $p);
 		   }else{
-			   $any_search_term = false;
-			   foreach($search_terms as $t){//Any search term in post titles.
-				   if(str_contains($p['meta']['h1'], $search)){
-					   $any_search_term = true;
+			   $all_search_terms = true;
+			   foreach($search_terms as $t){//check that All search terms in post title
+				   if(!str_contains($p['meta']['h1'], $search)){
+					   $all_search_terms = false;
+					   break;
 				   }
 			   }
-			   if($any_search_term){
+			   if($all_search_terms){//if all search terms can be found in post title
 				   //push
 				   array_push($results, $p);
-			   }elseif(str_contains($p['content'], $search)){//Full-sentence matches in post content.
-				   //push
-				   array_push($results, $p);
-			   }elseif(in_array($search, $p['meta']['tags'])){//search full search string in tags
-				   //push
-				   array_push($results, $p);
+			   }else{
+				   $any_search_term = false;
+				   foreach($search_terms as $t){//Any search term in post titles.
+					   if(str_contains($p['meta']['h1'], $search)){
+						   $any_search_term = true;
+					   }
+				   }
+				   if($any_search_term){
+					   //push
+					   array_push($results, $p);
+				   }elseif(str_contains($p['content'], $search)){//Full-sentence matches in post content.
+					   //push
+					   array_push($results, $p);
+				   }elseif(in_array($search, $p['meta']['tags'])){//search full search string in tags
+					   //push
+					   array_push($results, $p);
+				   }
 			   }
 		   }
-	   }
+		}
 	}
 ?>
 <div class="accent">
-	<h1>Results for "<?php echo $search; ?>"</h1>
+	<?php if($search): ?>
+		<h1>Results for "<?php echo $search; ?>"</h1>
+	<?php else:?>
+		<h1>Search</h1>
+	<?php endif; ?>
 </div>
 <div class="container">
 	<?php if(!empty($results)):
