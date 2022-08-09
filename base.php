@@ -36,7 +36,7 @@
 			<!-- LOGO + WEBSITE NAME -->
 			<div class="line">
 				<?php if(!empty($config['website-name'])): ?>
-					<a href="/"><img src="/img/150/100/logo.jpg" title="<?php echo $config['website-name']; ?>"></a>
+					<a href="/"><img src="/img/150/50/logo.jpg" title="<?php echo $config['website-name']; ?>"></a>
 					<p><?php echo $config['website-name']; ?></p>
 				<?php endif; ?>
 			</div>

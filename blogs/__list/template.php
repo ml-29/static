@@ -1,4 +1,6 @@
-<img src="/img/2000/200/background.jpg">
+<?php if($data['meta']['thumbnail']):?>
+	<img src="/img/2000/200/<?php echo $data['meta']['thumbnail']; ?>">
+<?php endif;?>
 
 <h1><?php echo $data['meta']['h1']; ?></h1>
 
