@@ -59,6 +59,10 @@ They contain code you want to include for this page or post only.
 	- imports.html : imports in the form of HTML tags (style sheets or scripts), they'll be added to the <head> tag
 	- scripts.js : plain JS code that will be added at the very end of the <body> tag
 	- style.css : additional CSS that will be added in a <style> tag at the end of the body, just before the JavaScript
+	
+**Create drafts**
+
+If you want to prevent drafts from being displayed on your website for now but still want them saved on the server, simply store their markdown files in the /pages/ or /blogs/ folder, they will be ignored. For the same result, you can also hide an existing piece of content by adding an underscore at the beginning of the name of its folder.
 
 ## Special pages and templates
 
