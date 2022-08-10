@@ -1,4 +1,4 @@
-<img src="/img/2000/200/background.jpg">
+<img src="/img/2000/200/<?php echo $data['meta']['thumbnail']; ?>">
 
 <h1>Tag - <?php echo ucfirst($data['tag']); ?></h1>
 
