@@ -14,25 +14,20 @@ Download this project, upload it on your apache server and voilà! A basic websi
 
 ## General structure
 
-**Folders**
-	- **/_core/** : core files that make the framework ... work, don't touch that
-	- **/pages/** : the pages content go there, one sub-folder per page
-	- **/blogs/** : contains the blog posts, one sub-folder per post
-	- **/img/** : contains all the pictures you want to use on your website (except for the favicon), sub-folders will be created for resized-versions
-	
-**Files**
-	- **base.php** : base template for the whole website (including the header, head, menu, footer and content wrapper)
-	- **404.php** : template for the 404 error page
-	- **config.yml** : helps you set data that will be used through and accessible from the whole website such as : the website name, contact info or menus links.
-	- **.htaccess** : redirects all requests to the index.php file so the custom router can handle them
-	- **style.css** : the general style sheet
-	- **index.php** : you don't want to edit that one
-	- **favicon.ico** : the website's favicon
-	
-**Files and folders you can delete**
-	- /.git/
-	- .gitignore
-	- readme.md
+	📁 **.git** : ❌ you can delete this one ❌
+	📁 **_core** : core files that make the framework ... work, don't touch that
+	📁 **pages** : **the pages content go there, one sub-folder per page**
+	📁 **blogs** : **contains the blog posts, one sub-folder per post**
+	📁 **img** : **contains all the pictures you want to use on your website (except for the favicon), sub-folders will be created for resized-versions**
+	📄 **base.php** : base template for the whole website (including the header, head, menu, footer and content wrapper)
+	📄 **404.php** : template for the 404 error page
+	📄 **config.yml** : **helps you set data that will be used through and accessible from the whole website such as : the website name, contact info or menus links.**
+	📄 **.htaccess** : redirects all requests to the index.php file so the custom router can handle them
+	📄 **style.css** : **the general style sheet**
+	📄 **index.php** : you don't want to edit that one
+	📄 **favicon.ico** : the website's favicon
+	📄 **.gitignore** : ❌ you can delete this one ❌
+	📄 **readme.md** : ❌ you can delete this one ❌
 
 ## Adding content, creating blog posts and pages
 
@@ -50,16 +45,16 @@ You can add an empty folder and create the files you need from scratch or copy t
 **mandatory files**
 
 	- content.md : the post's or page's text (don't write the page's heading there though, this one goes into the meta.yml file)
-	- meta.yml : meta-data such as date of creation, last update, meta-description, tags, tab title
+	- meta.yml : extra data that doesn't go in the content.md file, mainly meta-data such as date of creation, last update, meta-description, tags, tab title, but can also fit data such as the thumbnail's file name
 
 **optional files**
 
 They contain code you want to include for this page or post only.
-	- template.php : allows you to create a specific template and add PHP code to run for this page or post only, 
+	- template.php : allows you to create a specific template and add PHP code to run for this page or post only,
 	- imports.html : imports in the form of HTML tags (style sheets or scripts), they'll be added to the <head> tag
 	- scripts.js : plain JS code that will be added at the very end of the <body> tag
 	- style.css : additional CSS that will be added in a <style> tag at the end of the body, just before the JavaScript
-	
+
 **Create drafts**
 
 If you want to prevent drafts from being displayed on your website for now but still want them saved on the server, simply store their markdown files in the /pages/ or /blogs/ folder, they will be ignored. For the same result, you can also hide an existing piece of content by adding an underscore at the beginning of the name of its folder.
@@ -79,7 +74,7 @@ You can find its files in the /__home_page/ folder. This folder works the same a
 /blogs/ contains extra folders for blog specific pages which are :
 	- /__list/ : displays the list of the blog posts at www.website.com/blog/
 	- /__tag/ : same as list except only the posts who possess a given tag are displayed, this page can be access by clicking on a tag name in the list, its URL looks like www.website.com/tag/tag-name
-	
+
 The files in those folders behave exactly like blog post files except the template.php file is mandatory for them to work properly.
 
 ##  Customizing templates
@@ -95,6 +90,7 @@ Each template can access the following variables :
 		- css : style.css content as is
 		- js_intag : can be populated in the page / post-specific template itself with JavaScript code between <script> tags
 		- css_intag : can be populated in the page / post-specific template itself with CSS code between <style> tags
+
 ## Pictures
 
 All the pictures go into the /img/ folder. Just drop them at the root of the folder.
@@ -113,5 +109,5 @@ The file formats are currently supported :
 	- gif
 	- ico
 	- webp
-	
+
 Note : the svg files are never resized, an URL containing a height and width for an svg will simply yield the original file instead of a resized copy.
