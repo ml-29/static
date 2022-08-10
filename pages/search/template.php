@@ -4,7 +4,7 @@
 	if(isset($_GET['q'])){
 		$search = strtolower(trim($_GET['q']));
 		$search_terms = explode(' ', $search);
-		$blog_posts = listPosts('blog');
+		$blog_posts = Data::listPosts('blog');
 
 		foreach($blog_posts as $p){
 		   if(str_contains($p['meta']['h1'], $search)){//Full-sentence matches in post title
