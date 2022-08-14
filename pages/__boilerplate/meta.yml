@@ -1,8 +1,9 @@
 # mandatory for the website to work :
 h1 : "The page main heading"
+title : "Title" # page title as it will appear in the tab
 
 # everything else, mainly depends on how much you care about SEO and what your template requires
-title : "Page title as it will appear in the tab"
+
 meta-description : "The page meta description, max 250 characters"
 created_at : 2022-12-14T21:59+1:00 # dates use the ISO-8601 standard
 updated_at : 2022-12-17T20:03+1:00

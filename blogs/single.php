@@ -1,5 +1,5 @@
 <?php if($data['meta']['thumbnail']):?>
-	<img src="/img/2000/200/<?php echo $data['meta']['thumbnail']; ?>">
+	<img src="/img/2000/200/<?php echo $data['meta']['thumbnail']; ?>" alt="<?php echo $data['meta']['title']; ?>">
 <?php endif;?>
 
 <!-- TODO : add dates (updated, edited + tags) -->
