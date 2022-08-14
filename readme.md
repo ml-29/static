@@ -57,7 +57,13 @@ They contain code you want to include for this page or post only.
 
 **Create drafts**
 
-If you want to prevent drafts from being displayed on your website for now but still want them saved on the server, simply store their markdown files in the /pages/ or /blogs/ folder, they will be ignored. For the same result, you can also hide an existing piece of content by adding an underscore at the beginning of the name of its folder.
+📁 **_draft-page-or-blog**
+📄 **draft-content.md**
+
+If you want to prevent drafts from being displayed on your website for now but still want them saved on the server,
+simply store their markdown files in the /pages/ or /blogs/ folder, they will be ignored.
+
+For the same result, you can also hide an existing piece of content by adding an underscore at the beginning of the name of its folder.
 
 ## Special pages and templates
 
