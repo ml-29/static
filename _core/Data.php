@@ -40,14 +40,21 @@ class Data {
 		return $data;
 	}
 
-	public static function listPosts($type){
+	public static function listPosts($type = null){
 		global $config;
-		$s = scandir($type . 's');
-		$r = [];
-		foreach($s as $v){
-			if(!is_dir($v) && (isSlug($v) || ($type == 'page' && $v == $config['home-page-folder']))) {
-				$data = self::getPostData($type, $v);
-				array_push($r, $data);
+		$types = array($type);
+		if(!$type){
+			$types = self::listPostTypes();
+		}
+		foreach($types as $type){
+			$s = scandir($type . 's');
+			$r = [];
+			foreach($s as $v){
+				if(!is_dir($v) && (isSlug($v) || ($type == 'page' && $v == $config['home-page-folder']))) {
+					$data = self::getPostData($type, $v);
+					// $data['type'] = $type;
+					array_push($r, $data);
+				}
 			}
 		}
 		return $r;
@@ -57,7 +64,7 @@ class Data {
 		$r = [];
 		foreach($s as $v){
 			if(is_dir($v) && isSlug($v) && $v != 'img') {
-				array_push($r, $v);
+				array_push($r, rtrim($v,'s'));
 			}
 		}
 		return $r;
