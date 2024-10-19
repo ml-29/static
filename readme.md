@@ -1,5 +1,9 @@
 # Static
 
+<!-- TODO : add installation instructions (activate necessary apache extensions : yaml, activate gd (image resizing) -->
+<!-- TODO : explain how to run locally : change apache document root -->
+<!-- TODO : explain how to update existing website without smooching its contents -->
+
 ## What it is
 
 A mini PHP framework for static PHP websites.
