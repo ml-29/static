@@ -73,3 +73,33 @@ header, .line, header nav ul {
 	display: flex;
 	flex-direction: row;
 }
+
+/* -- CODE SNIPPETS COPY BUTTON -- */
+pre {
+	position: relative;
+}
+
+code {
+	border-radius: 0.3em;
+}
+
+pre:hover{
+	cursor: pointer;
+}
+pre:hover .copy-button{
+	display: block;
+}
+.copy-button {
+	display: none;
+	position: absolute;
+	top: 0.5em;
+	right: 0.5em;
+	cursor: pointer;
+	background-color: transparent;
+	border: 1px solid #ffffff22;
+	border-radius: .25rem;
+	color: White;
+	outline: none;
+	height: 30px;
+	min-width: 30px;
+}

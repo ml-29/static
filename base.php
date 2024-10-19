@@ -24,7 +24,10 @@
 
 		<!-- GLOBAL STYLESHEET -->
 		<link rel="stylesheet" href="/style.css">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+
+		<!-- Code snippets syntax highlighter : HIGHLIGHT JS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai-sublime.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
 		<!-- PAGE DEPENDANT IMPORTS -->
 		<?php if(!empty($data['imports'])): ?>
@@ -101,8 +104,83 @@
 		} ?>
 
 		<!-- SCRIPTS USED THE ENTIRE WEBSITE -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-core.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/autoloader/prism-autoloader.min.js"></script>
+		<script>
+			// -- CODE SNIPPETS COPY BUTTON --
+			function fallbackCopyTextToClipboard(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+
+				// Avoid scrolling to bottom
+				textArea.style.top = "0";
+				textArea.style.left = "0";
+				textArea.style.position = "fixed";
+
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+
+				try {
+					var successful = document.execCommand('copy');
+					var msg = successful ? 'successful' : 'unsuccessful';
+					console.log('Fallback: Copying text command was ' + msg);
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+
+				document.body.removeChild(textArea);
+			}
+
+			function htmlDecode(input) {
+				var doc = new DOMParser().parseFromString(input, "text/html");
+				return doc.documentElement.textContent;
+			}
+
+			function copyTextToClipboard(text) {
+				var t = htmlDecode(text);
+				if (!navigator.clipboard) {
+					fallbackCopyTextToClipboard(t);
+					return;
+				}
+				navigator.clipboard.writeText(t).then(function() {
+					console.log('Async: Copying to clipboard was successful!');
+				}, function(err) {
+					console.error('Async: Could not copy text: ', err);
+				});
+			}
+
+			function fade(element) {
+				var op = 1;  // initial opacity
+				var timer = setInterval(function () {
+					if (op <= 0.1){
+						clearInterval(timer);
+						element.style.display = 'none';
+					}
+						element.style.opacity = op;
+						element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+					op -= op * 0.1;
+				}, 50);
+			}
+			const contents = [];
+
+			document.querySelectorAll('pre').forEach((el, index) => {
+				contents[index] = el.querySelector('code').innerHTML;
+
+				el.innerHTML = '<button class="copy-button">Copy</button>' + el.innerHTML;
+				el.addEventListener("mouseleave", function(e){
+					el.querySelector('button').innerHTML = 'Copy';
+				});
+
+				el.addEventListener("click", function(e){
+					var btn = el.querySelector('button');
+
+					copyTextToClipboard(contents[index]);
+					el.querySelector('button').innerHTML = 'Copied !';
+				});
+			});
+
+			// -- HIGHLIGHT JS --
+			hljs.highlightAll();
+		</script>
 
 		<!-- PAGE DEPENDANT JAVASCRIPT -->
 		<?php if(!empty($data['js'])):?>
